@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cp="ChatClient/bin:openkad/bin:jars/*"
+main="ca.polymtl.inf4402.tp3.ChatClient"
+
+java -cp "$cp" "$main" $*
