@@ -8,6 +8,7 @@ import il.technion.ewolf.kbr.KeybasedRouting;
 import il.technion.ewolf.kbr.MessageHandler;
 import il.technion.ewolf.kbr.Node;
 import il.technion.ewolf.kbr.openkad.KadNetModule;
+import ca.polymtl.inf4402.tp3.Message;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,6 +21,8 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -111,7 +114,15 @@ public class ChatClient {
 				room = input.readLine();
 				System.out.print("Message: ");
 				message = input.readLine();
-				cc.sendMessage(room, message);
+				try {
+					cc.sendMessage(room, message);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
 
 			default:
@@ -202,26 +213,28 @@ public class ChatClient {
             kbr.join(addresses);
 
 		}
-		
+					
 		// Enregistrement du callback de message.
 		kbr.register("message_handler", new MessageHandler() {
 
 		    @Override
 			public void onIncomingMessage(Node from, String tag,
 					Serializable content) {
-				System.out.println("I got a message from: "+from.getURI("openkad.udp").toString());
-				
+		    	
+		    	Message message = (Message) content;
+		    	String msg_format = "message recu de %s sur %s:%s";
+		    	String msg = String.format(msg_format, from.toString(), message.room, message.message);
+		    	System.out.println(msg);
+								
 			}
 			@Override
 			public Serializable onIncomingRequest(Node from, String tag,
 					Serializable content) {
 				// TODO Auto-generated method stub
-				System.out.println("I got a request !: "+from.getURI("openkad.udp").toString());
-		        return "Hello";
+				System.out.println("I will not handle the requests ...");
+		        return null;
 			}
 		});
-
-
 		
 	}
 
@@ -234,7 +247,9 @@ public class ChatClient {
 	public List<String> getRooms() {
 		ArrayList<String> rooms = new ArrayList<String>();
 		
+		System.out.println("je suis dans la methode getRooms");
 		List<Serializable> vals = dht.get("rooms");
+				
 		
 		for(Serializable val: vals)
 		{
@@ -252,7 +267,10 @@ public class ChatClient {
 	 *            Nom de la salle à rejoindre.
 	 */
 	public void joinRoom(String room) {
-		// À remplir
+				
+		dht.put(room, "rooms");
+		dht.put(kbr.getLocalNode(), room);
+								
 	}
 
 	/**
@@ -265,7 +283,12 @@ public class ChatClient {
 	public List<Node> getMembers(String room) {
 		ArrayList<Node> members = new ArrayList<Node>();
 
-		// À remplir
+		List<Serializable> vals = dht.get(room);
+		
+		for(Serializable val: vals)
+		{
+			members.add((Node) val); 
+		}
 
 		return members;
 	}
@@ -278,8 +301,29 @@ public class ChatClient {
 	 * @param message
 	 *            Le message.
 	 */
-	public void sendMessage(String room, String message) {
-		// À remplir
+	public void sendMessage(String room, String message) throws InterruptedException, ExecutionException {
+		// obtenir la liste des clients de la room.
+		
+		System.out.println("jessaye de pogner les client de la room:" + room);
+		
+		List<Serializable> vals = dht.get(room);
+		
+		System.out.println("voici les clients:" + vals.toString());
+		
+		for(Serializable val: vals)
+		{
+			Node c = (Node) val;
+								
+			try {
+				kbr.sendMessage(c,"message_handler", new Message(room,message));
+				}
+			catch (IOException e) {
+				
+				System.out.println("error lors de l'envoi du message");
+			}
+		}
+		
+		
 	}
 
 	@Override
