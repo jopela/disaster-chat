@@ -233,8 +233,14 @@ public class ChatClient {
 	 */
 	public List<String> getRooms() {
 		ArrayList<String> rooms = new ArrayList<String>();
-
-		// À remplir
+		
+		List<Serializable> vals = dht.get("rooms");
+		
+		for(Serializable val: vals)
+		{
+			rooms.add((String) val);
+		}
+		 
 		return rooms;
 	}
 
