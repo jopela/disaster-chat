@@ -5,14 +5,20 @@ import il.technion.ewolf.dht.DHTStorage;
 import il.technion.ewolf.dht.SimpleDHTModule;
 import il.technion.ewolf.dht.storage.SimpleDHTStorage;
 import il.technion.ewolf.kbr.KeybasedRouting;
+import il.technion.ewolf.kbr.MessageHandler;
 import il.technion.ewolf.kbr.Node;
 import il.technion.ewolf.kbr.openkad.KadNetModule;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
+
+
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.google.inject.Guice;
@@ -186,13 +192,37 @@ public class ChatClient {
 
 		// Connecter notre réseau simple à un client du réseau existant.
 		if (bootstrapAddr != null && bootstrapPort > 0) {
-			// À remplir
-			// Se connecter au réseau en utilisant les informations de
-			// bootstrap.
-		}
+            String url_format = "oprnlad.udp://%s:%d/";
+            String url = String.format(url_format, bootstrapAddr, bootstrapPort);
+            
+            System.out.println("the uri i connect to is:"+url);
+            
+            ArrayList<URI> addresses = new ArrayList<URI>();
+            addresses.add(new URI(url));
+            kbr.join(addresses);
 
-		// À remplir
-		// Enregistrer un handler de messages.
+		}
+		
+		// Enregistrement du callback de message.
+		kbr.register("message_handler", new MessageHandler() {
+
+		    @Override
+			public void onIncomingMessage(Node from, String tag,
+					Serializable content) {
+				System.out.println("I got a message from: "+from.getURI("openkad.udp").toString());
+				
+			}
+			@Override
+			public Serializable onIncomingRequest(Node from, String tag,
+					Serializable content) {
+				// TODO Auto-generated method stub
+				System.out.println("I got a request !: "+from.getURI("openkad.udp").toString());
+		        return "Hello";
+			}
+		});
+
+
+		
 	}
 
 	/**
@@ -205,7 +235,6 @@ public class ChatClient {
 		ArrayList<String> rooms = new ArrayList<String>();
 
 		// À remplir
-
 		return rooms;
 	}
 
