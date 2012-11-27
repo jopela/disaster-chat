@@ -52,11 +52,6 @@ les requêtes des clients par signatures puisqu'il est possible de connaitre le
 propriétaire d'une clef publique.
 
 
-
-
-
-
-
 Question3
 ================================================================================
 Il est mieux d'ejecter les plus vieux clients pour deux raisons:
@@ -66,9 +61,9 @@ Il est mieux d'ejecter les plus vieux clients pour deux raisons:
    toujours dans le reseau qu'un ancient client.
 
 2. On est plus susceptible de communiquer avec un client qui vient tout juste 
-   de communiquer avec nous. Il s'agit en fait du principe (TODO: trouver le nom
-   du principe). On peut faire une analogie avec le fonctionnement d'une 
-   cache dans un processeur en disant que l'acceptation d'un nouveau client
+   de communiquer avec nous. Il s'agit en fait du principe localite temporelle.
+   SOn peut faire une analogie avec le fonctionnement d'une 
+   cache dans un processeur en considerant que l'acceptation d'un nouveau client
    correspond a une politique de cache FIRST IN FIRST OUT.
 
 Question4
@@ -84,9 +79,10 @@ l'identite du nouveau client sur sa cache locale.
 Afin d'obtenir l'adresse initiale du noeud bootstrap, on doit absolument 
 connaitre l'identite initiale d'un noeud present dans le reseau. Ce probleme
 est a la fois simple et difficile a resoudre. De maniere simple, on pourrait 
-mettre en ligne sur un site web une liste des noeud du reseau. Ceci est 
+mettre en ligne sur un site web une liste des noeuds du reseau. Ceci est 
 cependant un probleme car on depend maintenant encore d'un entite centrale
-pour assurer le bon fonctionnement du reseau. Cette solution doit etre couple
-a un autre processus de dissusion des noeuds qui sont en lignes dans le reseau.
+pour assurer le bon fonctionnement du reseau. Comme autre solution, on pourrait
+considerer le partage d'adresse de noeuds qui sont extremenent fiable 
+(presque toujours connecte) a meme le code source du client.
 
 
