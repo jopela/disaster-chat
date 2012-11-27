@@ -12,8 +12,9 @@ en le considerant comme la représentation d'un arbre binaire. A partir de
 l'indice d'un client dans l'arbre, on peut calculer l'indice de ces deux fils 
 de la manière suivante:
 
-    indice_fils_gauche = 2 * index + 1
-    indice_fils_droit = 2 * index + 2
+1. indice_fils_gauche = 2 * index + 1
+
+2. indice_fils_droit = 2 * index + 2
 
 Suffit de passer dans le message que l'on envoit au client son propre indice
 dans le tableau. Le client qui reçoit ensuite le message sera responsable 
