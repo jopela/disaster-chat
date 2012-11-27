@@ -5,27 +5,88 @@ TP3 - Jonathan Pelletier (1245014) Karim Badrudin (1466559)
 Question1
 ================================================================================
 Il est possible de modifier le design de l'application de telle sorte que 
-chaque client est responsable d'envoyer 2 messages pour chaque message envoye.
+chaque client est responsable d'envoyer 2 messages pour chaque message envoyé.
 
-L'idee est d'utiliser le tableau de client en le considerant comme la 
-representation d'un arbre binaire. A partir de l'indice d'un client
-dans l'arbre, on peut calculer l'indice de ces deux fils de la maniere 
-suivante:
+L'idée est d'utiliser le tableau de client membre d'une salle de chat
+en le considerant comme la représentation d'un arbre binaire. A partir de 
+l'indice d'un client dans l'arbre, on peut calculer l'indice de ces deux fils 
+de la manière suivante:
 
     indice_fils_gauche = 2 * index + 1
     indice_fils_droit = 2 * index + 2
 
 Suffit de passer dans le message que l'on envoit au client son propre indice
-dans le tableau. Le client qui recoit ensuite le message sera responsable 
-d'acheminer celui-ci a ces fils jusqu'a ce que le client qui recoive un 
+dans le tableau. Le client qui reçoit ensuite le message sera responsable 
+d'acheminer celui-ci à ces fils jusqu'a ce que le client qui recoive un 
 message soit un noeud feuille dans notre arbre binaire.
 
 Cette simple modification permet de liberer la charge d'envoit de message
-d'un client et de la faire passer de N envoit a 2 envoit.
+d'un client et de la faire passer de N messagesa 2 messages.
 
 Question2
 ================================================================================
-pistes: HMAC ?  public-key something?
+On considère que le premier client qui fait une requête "put" pour une clef de
+la table qui n'existe pas devient le propriétaire du contenu associé à cette 
+clef. Les clients du réseau auront le droit de lire la valeur de la clef avec 
+la requête "get" mais seul le propriétaire doit pouvoir modifier (avec une
+requête "put" subséquente) ou effacer, avec une requête "delete", le contenue de
+la clef.
+
+Voici le modèle que l'on propose afin de mettre en place, de manière 
+sécuritaire, notre concept de propriété. On expose d'abord les détails 
+techniques et des explications seront ensuite donnée afin de bien comprendre
+comment ce modèle permet d'assurer la sécurité des données. 
+
+Éléments du modèle: MARCHE PASSSSSSSSSSSSS
+
+1. Chaque client du réseau possède une paire de clef publique-privé que l'on
+   nomme RSA_s pour la clef privée et RSA_p pour la clef publique.
+
+2. Lors d'une requête "put", le client transmet l'information suivante:
+
+    a. La clef.
+
+    b. La valeur.
+
+    c. RSA_p.
+
+    d. Signature_propriete = RSA_s(sha512(clef || valeur)). Ici, || représente
+    la concaténation.
+
+3. Lors d'une requête "delete", le client transmet l'information suivante:
+
+    a. La clef.
+
+    b. RSA_p.
+
+3. Lors des requêtes "put", le client responsable de la clef conserve la clef 
+   publique des clients et la signature de la propriété.
+
+4. Lors des requêtes "put" et "delete" subséquentes, le client responsable de la
+   clef procède à la vérification suivante avant d'exécuter la commande:
+
+    a. contenu = RSA_p( Signature_propriete )
+
+    b. if shah512( clef || valeur) == contenu:
+        executer_commande()
+       else:
+        refuser_commande()
+
+Voici quelques explications qui permettent de comprendre le mécanisme. Pour 
+construire son message de requête "put", un client commence par construire
+la signature d'un identifiant du contenu donc il se considère le propriétaire.
+Il prend donc le résultat du hachage de la clef et de la valeur puis il utilise
+sa clef privé pour signer le résultat. Ceci permet de vérifier que le client
+qui possède la clef publique RSA_p est celui qui se considère le propriétaire
+d'un contenu qui possède un identifiant unique de sha512(clef || valeur).
+Cette valeur de sha512 peut-être utilisé pour valider l'intégrité de la 
+combinaison clef valeur.
+
+Maintenant, 
+
+
+
+        
 
 Question3
 ================================================================================
