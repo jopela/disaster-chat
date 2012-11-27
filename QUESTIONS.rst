@@ -16,78 +16,46 @@ de la manière suivante:
 
 2. indice_fils_droit = 2 * index + 2
 
-Suffit de passer dans le message que l'on envoit au client son propre indice
+Suffit de passer dans le message que l'on envoit au client son indice
 dans le tableau. Le client qui reçoit ensuite le message sera responsable 
-d'acheminer celui-ci à ces fils jusqu'a ce que le client qui recoive un 
+d'acheminer celui-ci à ces fils jusqu'à ce que le client qui reçoive un 
 message soit un noeud feuille dans notre arbre binaire.
 
-Cette simple modification permet de liberer la charge d'envoit de message
-d'un client et de la faire passer de N messagesa 2 messages.
+Cette simple modification permet de libérer la charge d'envoit de message
+d'un client et de la faire passer de N messages à 2 messages.
 
 Question2
 ================================================================================
-On considère que le premier client qui fait une requête "put" pour une clef de
-la table qui n'existe pas devient le propriétaire du contenu associé à cette 
-clef. Les clients du réseau auront le droit de lire la valeur de la clef avec 
-la requête "get" mais seul le propriétaire doit pouvoir modifier (avec une
-requête "put" subséquente) ou effacer, avec une requête "delete", le contenue de
-la clef.
+Mentionnons tout d'abord qu'il s'agit d'un problème très difficile à résoudre
+à cause de la nature "décentralisé" des systèmes P2P.
+Pour les systèmes que l'on utilise généralement dans notre vie quotidienne 
+(site web de la banque, paiement en ligne etc.) l'authenticité des acteurs
+est assuré grâce à une authorité tierce; l'authorité de certification. Cette
+authorité s'occupe d'émettre des certificats qui permettent de faire l'échange
+de clefs publiques sur un réseau qui peut contenir des agents malicieux. Ce 
+modèle fonctionne "bien" pour les communications point à point mais, généralement,
+les applications P2P ne peuvent avoir confiance en une telle authorité tierce.
+Souvent, le but d'une application P2P est d'échapper au contrôle central afin
+de permettre la diffusion libre de contenu. De plus, on peut considérer l'ajout
+d'une authorité centrale comme étant une violation du principe P2P.
 
-Voici le modèle que l'on propose afin de mettre en place, de manière 
-sécuritaire, notre concept de propriété. On expose d'abord les détails 
-techniques et des explications seront ensuite donnée afin de bien comprendre
-comment ce modèle permet d'assurer la sécurité des données. 
+Il faut donc une autre manière de partager des clefs publiques sans avoir 
+recours à une authorité tierce. En supposant que nous avons un budget 
+illimité afin d'implémenter une solution, voici la structure de partage de clef
+que l'on propose: le partage de clef quantique.
 
-Éléments du modèle: MARCHE PASSSSSSSSSSSSS
-
-1. Chaque client du réseau possède une paire de clef publique-privé que l'on
-   nomme RSA_s pour la clef privée et RSA_p pour la clef publique.
-
-2. Lors d'une requête "put", le client transmet l'information suivante:
-
-    a. La clef.
-
-    b. La valeur.
-
-    c. RSA_p.
-
-    d. Signature_propriete = RSA_s(sha512(clef || valeur)). Ici, || représente
-    la concaténation.
-
-3. Lors d'une requête "delete", le client transmet l'information suivante:
-
-    a. La clef.
-
-    b. RSA_p.
-
-3. Lors des requêtes "put", le client responsable de la clef conserve la clef 
-   publique des clients et la signature de la propriété.
-
-4. Lors des requêtes "put" et "delete" subséquentes, le client responsable de la
-   clef procède à la vérification suivante avant d'exécuter la commande:
-
-    a. contenu = RSA_p( Signature_propriete )
-
-    b. if shah512( clef || valeur) == contenu:
-        executer_commande()
-       else:
-        refuser_commande()
-
-Voici quelques explications qui permettent de comprendre le mécanisme. Pour 
-construire son message de requête "put", un client commence par construire
-la signature d'un identifiant du contenu donc il se considère le propriétaire.
-Il prend donc le résultat du hachage de la clef et de la valeur puis il utilise
-sa clef privé pour signer le résultat. Ceci permet de vérifier que le client
-qui possède la clef publique RSA_p est celui qui se considère le propriétaire
-d'un contenu qui possède un identifiant unique de sha512(clef || valeur).
-Cette valeur de sha512 peut-être utilisé pour valider l'intégrité de la 
-combinaison clef valeur.
-
-Maintenant, 
+Avec le partage de clef quantique, il est possible à deux agents qui communiquent
+sur le réseau de partager un secret de manière totalement sécuritaire.
+Ce secret pourrait être une clef symétrique qui sera ensuite utilisé pour
+encrypter le traffic du partage d'une clef publique. On peut donc authentifier
+les requêtes des clients par signatures puisqu'il est possible de connaitre le
+propriétaire d'une clef publique.
 
 
 
-        
+
+
+
 
 Question3
 ================================================================================
