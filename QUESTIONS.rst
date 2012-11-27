@@ -26,31 +26,17 @@ d'un client et de la faire passer de N messages à 2 messages.
 
 Question2
 ================================================================================
-Mentionnons tout d'abord qu'il s'agit d'un problème très difficile à résoudre
-à cause de la nature "décentralisé" des systèmes P2P.
-Pour les systèmes que l'on utilise généralement dans notre vie quotidienne 
-(site web de la banque, paiement en ligne etc.) l'authenticité des acteurs
-est assuré grâce à une authorité tierce; l'authorité de certification. Cette
-authorité s'occupe d'émettre des certificats qui permettent de faire l'échange
-de clefs publiques sur un réseau qui peut contenir des agents malicieux. Ce 
-modèle fonctionne "bien" pour les communications point à point mais, généralement,
-les applications P2P ne peuvent avoir confiance en une telle authorité tierce.
-Souvent, le but d'une application P2P est d'échapper au contrôle central afin
-de permettre la diffusion libre de contenu. De plus, on peut considérer l'ajout
-d'une authorité centrale comme étant une violation du principe P2P.
+Afin de resoudre le probleme d'integrite et d'authenticite sur le reseau P2P,
+une solution est l'utilisation d'une entite tierce qui serait responsable 
+d'emettre des certificats au clients du reseau. Les clients qui communiquent
+ensembles pourrait le faire en utilisant une encryption RSA par exemple. Pour
+toute requete qui implique la modification d'un contenu, le client responsable
+d'une clef pourrait exiger que la communication soit encrypte ce qui empeche
+un client malicieux de modifier des donnees qui ne lui appartiennent pas.
 
-Il faut donc une autre manière de partager des clefs publiques sans avoir 
-recours à une authorité tierce. En supposant que nous avons un budget 
-illimité afin d'implémenter une solution, voici la structure de partage de clef
-que l'on propose: le partage de clef quantique.
-
-Avec le partage de clef quantique, il est possible à deux agents qui communiquent
-sur le réseau de partager un secret de manière totalement sécuritaire.
-Ce secret pourrait être une clef symétrique qui sera ensuite utilisé pour
-encrypter le traffic du partage d'une clef publique. On peut donc authentifier
-les requêtes des clients par signatures puisqu'il est possible de connaitre le
-propriétaire d'une clef publique.
-
+Cette solution a pour avantage d'etre simple a implementer. Cependant, on 
+peut considerer qu'il s'agit en fait d'une violation du principe P2P car
+le fonctionnement du reseau depend maintenant d'une entite centrale.
 
 Question3
 ================================================================================
