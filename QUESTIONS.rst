@@ -26,7 +26,7 @@ d'un client et de la faire passer de N messages à 2 messages.
 
 Question2
 ================================================================================
-Afin de résoudre le problème d'integrité et d'authenticité sur le reseau P2P,
+Afin de résoudre le problème d'integrité et d'authenticité sur le réseau P2P,
 une solution possible est l'utilisation d'une entité tierce qui serait 
 responsable d'émettre des certificats au clients du reseau. Les clients qui 
 communiquent ensembles pourrait le faire en utilisant une encryption RSA par 
