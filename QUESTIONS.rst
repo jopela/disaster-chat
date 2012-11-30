@@ -47,7 +47,7 @@ peut avoir confiance en une authorité tierce (censure par un gouvernement par
 exemple), il faut considérer une autre solution. À ce sujet, on peut consulter
 le document RFC 5765: Security Issues and Solutions in Peer-to-Peer Systems for
 Realtime Communications qui fait état des problèmes de sécurités particuliés aux
-réseaux P2P et des solutions existantes pour afin d'y remédier.
+réseaux P2P et des solutions existantes afin d'y remédier.
 
 Question3
 ================================================================================
