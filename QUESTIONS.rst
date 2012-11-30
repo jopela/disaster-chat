@@ -51,35 +51,35 @@ réseaux P2P et des solutions existantes pour afin d'y remédier.
 
 Question3
 ================================================================================
-Il est mieux d'ejecter les plus vieux clients pour deux raisons:
+Il est mieux d'éjecter les plus vieux clients pour deux raisons:
 
-1. Les clients du reseau sont libre de se connecter et de se deconnecter comme
-   bon leur semble. Un client plus recent est donc plus succesptible d'etre
-   toujours dans le reseau qu'un ancient client.
+1. Les clients du réseau sont libres de se connecter et de se déconnecter comme
+   bon leur semble. Un client plus récent est donc plus succesptible d'être
+   toujours dans le réseau qu'un ancient client.
 
 2. On est plus susceptible de communiquer avec un client qui vient tout juste 
-   de communiquer avec nous. Il s'agit en fait du principe localite temporelle.
-   SOn peut faire une analogie avec le fonctionnement d'une 
-   cache dans un processeur en considerant que l'acceptation d'un nouveau client
-   correspond a une politique de cache FIRST IN FIRST OUT.
+   de communiquer avec nous. Il s'agit en fait du principe de localité 
+   temporelle. On peut faire une analogie avec le fonctionnement d'une 
+   cache dans un processeur en considérant que l'acceptation d'un nouveau client
+   correspond à une politique de cache FIRST IN FIRST OUT.
 
 Question4
 ================================================================================
-Dans le monde reel, Le bootstrap Kademlia correspond a la procedure par laquelle
-un noeud propage son identite a travers le reseau. Le noeud qui desire joindre 
-le reseau prend l'adresse d'un noeud initialement connu (le noeud de bootstrap) 
-et ajoute son identite a ce noeud. Le noeud effectue ensuite une demande de sa
-propre identite au noeud de bootstrap. Ceci initie la recherche de la ressource 
+Dans le monde reel, Le bootstrap Kademlia correspond à la procédure par laquelle
+un noeud propage son identité à travers le réseau. Le noeud qui désire joindre 
+le réseau prend l'adresse d'un noeud initialement connu (le noeud de bootstrap) 
+et ajoute son identité à ce noeud. Le noeud effectue ensuite une demande de sa
+propre identité au noeud de bootstrap. Ceci initie la recherche de la ressource 
 et chacun des noeuds qui participent au relai de l'information va ajouter 
-l'identite du nouveau client sur sa cache locale.
+l'identité du nouveau client sur sa cache locale.
 
 Afin d'obtenir l'adresse initiale du noeud bootstrap, on doit absolument 
-connaitre l'identite initiale d'un noeud present dans le reseau. Ce probleme
-est a la fois simple et difficile a resoudre. De maniere simple, on pourrait 
-mettre en ligne sur un site web une liste des noeuds du reseau. Ceci est 
-cependant un probleme car on depend maintenant encore d'un entite centrale
-pour assurer le bon fonctionnement du reseau. Comme autre solution, on pourrait
-considerer le partage d'adresse de noeuds qui sont extremenent fiable 
-(presque toujours connecte) a meme le code source du client.
+connaitre l'identité initiale d'un noeud présent dans le réseau. Ce probleme
+est à la fois simple et difficile à résoudre. De manière simple, on pourrait 
+mettre en ligne sur un site web une liste des noeuds du réseau. Ceci est 
+cependant un problème car on depend maintenant encore d'un entité centrale
+pour assurer le bon fonctionnement du réseau. Comme autre solution, on pourrait
+considérer le partage d'adresse de noeuds qui sont extrêmenent fiable 
+(presque toujours connecté) à même le code source du client.
 
 
