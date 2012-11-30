@@ -28,19 +28,26 @@ Question2
 ================================================================================
 Afin de résoudre le problème d'integrité et d'authenticité sur le réseau P2P,
 une solution possible est l'utilisation d'une entité tierce qui serait 
-responsable d'émettre des certificats au clients du reseau. Les clients qui 
-communiquent ensembles pourrait le faire en utilisant une encryption RSA par 
-exemple. Pour toute requête qui implique la modification d'un contenu, le client
-responsable d'une clef pourrait exiger que la communication soit encrypté ce qui
-empêche un client malicieux de modifier des données qui ne lui appartiennent 
-pas. Plus précisément, une clef publique et la preuve que cette clef publique
-appartient au client permet un échange d'une clef symétrique
-temporaire à l'aide de laquelle tout les autres messages de la communication
-sont encryptés, assurant ainsi l'authenticité des requêtes.
+responsable d'émettre des certificats aux clients du reseau. Les clients qui 
+communiquent ensembles pourrait le faire en utilisant une encryption asymétrique
+(RSA par exemple). Pour toute requête qui implique la modification d'un contenu,
+le client responsable d'une clef pourrait exiger que la communication soit 
+encrypté ce qui empêche un client malicieux de modifier des données qui ne lui 
+appartiennent pas. Plus précisément, une clef publique et la preuve que cette 
+clef publique appartient au client permet un échange d'une clef symétrique 
+(clef AES par exemple) temporaire à l'aide de laquelle tous les autres messages
+de la communication sont encryptés, assurant ainsi l'authenticité des requêtes.
 
-Cette solution a pour avantage d'être simple a implémenter. Cependant, on 
-peut considerer qu'il s'agit en fait d'une violation du principe P2P car
-le fonctionnement du reseau depend maintenant d'une entite centrale.
+Cette solution a pour avantage d'être simple à implémenter. Cependant, on 
+peut considerer qu'il s'agit d'une violation du principe P2P car
+le fonctionnement du réseau dépend maintenant d'une entité centrale. Dans le 
+cadre d'une application de communication d'urgence, la solution par certificat
+nous semble justifié. Dans un cas ou le réseau P2P est utilisé parce qu'on ne
+peut avoir confiance en une authorité tierce (censure par un gouvernement par
+exemple), il faut considérer une autre solution. À ce sujet, on peut consulter
+le document RFC 5765: Security Issues and Solutions in Peer-to-Peer Systems for
+Realtime Communications qui fait état des problèmes de sécurités particuliés aux
+réseaux P2P et des solutions existantes pour afin d'y remédier.
 
 Question3
 ================================================================================
