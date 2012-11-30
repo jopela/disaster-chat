@@ -26,15 +26,19 @@ d'un client et de la faire passer de N messages à 2 messages.
 
 Question2
 ================================================================================
-Afin de resoudre le probleme d'integrite et d'authenticite sur le reseau P2P,
-une solution est l'utilisation d'une entite tierce qui serait responsable 
-d'emettre des certificats au clients du reseau. Les clients qui communiquent
-ensembles pourrait le faire en utilisant une encryption RSA par exemple. Pour
-toute requete qui implique la modification d'un contenu, le client responsable
-d'une clef pourrait exiger que la communication soit encrypte ce qui empeche
-un client malicieux de modifier des donnees qui ne lui appartiennent pas.
+Afin de résoudre le problème d'integrité et d'authenticité sur le reseau P2P,
+une solution possible est l'utilisation d'une entité tierce qui serait 
+responsable d'émettre des certificats au clients du reseau. Les clients qui 
+communiquent ensembles pourrait le faire en utilisant une encryption RSA par 
+exemple. Pour toute requête qui implique la modification d'un contenu, le client
+responsable d'une clef pourrait exiger que la communication soit encrypté ce qui
+empêche un client malicieux de modifier des données qui ne lui appartiennent 
+pas. Plus précisément, une clef publique et la preuve que cette clef publique
+appartient au client permet un échange d'une clef symétrique
+temporaire à l'aide de laquelle tout les autres messages de la communication
+sont encryptés, assurant ainsi l'authenticité des requêtes.
 
-Cette solution a pour avantage d'etre simple a implementer. Cependant, on 
+Cette solution a pour avantage d'être simple a implémenter. Cependant, on 
 peut considerer qu'il s'agit en fait d'une violation du principe P2P car
 le fonctionnement du reseau depend maintenant d'une entite centrale.
 
